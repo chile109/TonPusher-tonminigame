@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 export function UnityGame() {
@@ -9,46 +9,36 @@ export function UnityGame() {
     addEventListener,
     removeEventListener,
   } = useUnityContext({
-    loaderUrl: "UnityBuild/webgl_app.loader.js",
-    dataUrl: "UnityBuild/webgl_app.data",
-    frameworkUrl: "UnityBuild/webgl_app.framework.js",
-    codeUrl: "UnityBuild/webgl_app.wasm",
+    loaderUrl: "UnityBuild/miniapp.loader.js",
+    dataUrl: "UnityBuild/miniapp.data",
+    frameworkUrl: "UnityBuild/miniapp.framework.js",
+    codeUrl: "UnityBuild/miniapp.wasm",
   });
 
-  const [direction, setDirection] = useState("");
-  const [xpos, setXpos] = useState(0);
-  const [ypos, setYpos] = useState(0);
-
-  const handleMove = useCallback((direction: any, xpos: any, ypos: any) => {
-    setDirection(direction);
-    setXpos(xpos);
-    setYpos(ypos);
-  }, []);
-
-  useEffect(() => {
-    addEventListener("MoveCallback", handleMove);
-    return () => {
-      removeEventListener("MoveCallback", handleMove);
-    };
-  }, [addEventListener, removeEventListener, handleMove]);
-
-  function moveLeft() {
-    sendMessage("Sphere", "MoveLeft", 10);
-  }
-
   return (
-    <div>
-      <button onClick={moveLeft}>Move Left</button>
-      {<p>{`Moved! ${direction} x = ${xpos} y = ${ypos} `}</p>}
+    <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100vw',
+      backgroundColor: 'black', // 添加背景色以更明顯地顯示居中效果
+    }}
+  >
+
       <Unity
         unityProvider={unityProvider}
         style={{
-          position: "absolute",
-          border: "2px solid black",
-          background: "grey",
-          visibility: isLoaded ? "visible" : "hidden",
+          position: 'relative',
+          height: '100%',
+          maxWidth: '828px',
+          aspectRatio: '828 / 1792',
+          border: '2px solid black',
+          background: 'grey',
+          visibility: isLoaded ? 'visible' : 'hidden',
         }}
       />
-    </div>
+  </div>
   );
 }

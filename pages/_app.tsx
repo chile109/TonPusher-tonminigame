@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { AppProps } from "next/app";
 
 import React from "react";
@@ -28,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={client}>
         <RainbowKitProvider>
-          <ConnectButton />
           <UnityGame />
           <Component {...pageProps} />
         </RainbowKitProvider>
